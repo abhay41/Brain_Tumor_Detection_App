@@ -1,0 +1,58 @@
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: brain_tumor_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_admin123
+      MYSQL_DATABASE: brain_tumor_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+  web:
+    image: brain_tumor_app
+    container_name: brain_tumor_web
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root_admin123
+      MYSQL_HOST: mysql
+      MYSQL_DB: brain_tumor_db
+      FLASK_ENV: production
+      SECRET_KEY: "This is Abhay"
+    volumes:
+      - ./app/static/uploads:/app/app/static/uploads
+    depends_on:
+      - mysql
+    networks:
+      - backend
+    # You can switch to Gunicorn for better performance
+    command: ["python", "run.py"]
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: brain_tumor_phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:

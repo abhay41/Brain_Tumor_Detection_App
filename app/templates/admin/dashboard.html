@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - System Performance{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard-container">
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="flex: 1; text-align: left;">
+            <h1>Admin Dashboard</h1>
+            <p class="subtitle">Comprehensive control and visibility over the system performance</p>
+        </div>
+        <div style="text-align: right;">
+            <a href="{{ url_for('admin.create_admin') }}" class="btn btn-secondary">Create a New Admin</a>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="system-overview card">
+            <h2>System Overview</h2>
+            <div class="overview-stats">
+                <div class="stat">
+                    <h3>Total Users</h3>
+                    <p>{{ total_users }}</p>
+                </div>
+                <div class="stat">
+                    <h3>Active Users</h3>
+                    <p>{{ total_users }}</p>
+                </div>
+                <div class="stat">
+                    <h3>Inactive Users</h3>
+                    <p>{{ inactive_users }}</p>
+                </div>
+                <div class="stat">
+                    <h3>New Users (Last 30 Days)</h3>
+                    <p>{{ new_users_30_days }}</p>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="userGrowthChart"></canvas>
+            </div>
+        </div>
+
+
+        <div class="model-performance card">
+            <h2>Model Performance</h2>
+            <div class="model-stats">
+                <div class="stat">
+                    <h3>Accuracy</h3>
+                    <p>97.8%</p>
+                </div>
+                <div class="stat">
+                    <h3>Precision</h3>
+                    <p>100%</p>
+                </div>
+                <div class="stat">
+                    <h3>Recall</h3>
+                    <p>98.32%</p>
+                </div>
+                <div class="stat">
+                    <h3>F1-Score</h3>
+                    <p>99.15%</p>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="modelPerformanceChart"></canvas>
+            </div>
+        </div>
+
+
+        <div class="prediction-analytics card">
+            <h2>Prediction Analytics</h2>
+            <div class="chart-container">
+                <canvas id="predictionChart"></canvas>
+            </div>
+        </div>
+        <div class="user-management card">
+            <h2>User Management</h2>
+            <div class="user-actions">
+                <a href="{{ url_for('admin.list_users') }}" class="btn btn-primary">Manage Users</a>
+                <a href="{{ url_for('admin.manage_logins') }}" class="btn btn-secondary">User Activity Logs</a>
+            </div>
+            <div class="user-stats">
+                <div class="stat">
+                    <h3>Verified Users</h3>
+                    <p>{{ verified_users }}</p>
+                </div>
+                <div class="stat">
+                    <h3>Banned Users</h3>
+                    <p>{{ banned_users }}</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="system-settings card">
+            <h2>System Settings</h2>
+            <div class="settings-actions">
+                <a href="{{ url_for('admin.manage_logins') }}" class="btn btn-primary">Manage Settings</a>
+                <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Backup Database</a>
+            </div>
+            <div class="settings-info">
+                <h3>Current Version:</h3>
+                <p>1.1.0</p>
+                <h3>Last Update:</h3>
+                <p>14/11/2024</p>
+            </div>
+        </div>
+
+        <div class="system-logs card">
+            <h2>System Logs</h2>
+            <div class="log-container">
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Timestamp</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in system_logs %}
+                            <tr class="log-entry {% if not log.success %}failed-login{% endif %}">
+                                <td>{{ log.user.username if log.user else 'Unknown' }}</td>
+                                <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                <td>
+                                    <span class="status-indicator {{ 'success' if log.success else 'failure' }}">
+                                        {{ '✓' if log.success else '✗' }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+<!-- Include Chart.js from a CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/admin_dashboard.js') }}"></script>
+{% endblock %}

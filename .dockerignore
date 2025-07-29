@@ -1,0 +1,26 @@
+__pycache__/ 
+*.py[cod]
+*.pyo
+*.log
+
+# Env & packages
+venv/
+.env
+*.env
+
+# Local static/uploads
+app/static/uploads/
+
+# OS & editor files
+.DS_Store
+*.swp
+
+# Large files
+*.zip
+*.tar.gz
+*.h5
+*.pt
+*.pkl
+*.mp4
+*.avi
+*.mkv

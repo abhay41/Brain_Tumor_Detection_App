@@ -1,0 +1,99 @@
+{% extends "base.html" %} 
+
+{% block title %}Profile - Brain Tumor Prediction App{% endblock %} 
+
+{% block content %} 
+
+<div class="profile-container">
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <!-- Profile Header -->
+    {% if current_user.is_authenticated %}
+
+    <div class="profile-header">
+        <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'img/profile.jpg') }}" 
+             alt="Profile Picture" class="profile-picture">
+        <h1>{{ current_user.username }}</h1>
+        <br>
+        <h2>{{ current_user.email }}</h2>
+        <div class="profile-actions">
+            <a href="{{ url_for('profile_image') }}">Edit Profile</a>
+            <a href="{{ url_for('change_password') }}">Change Password</a>
+            <a href="{{ url_for('dashboard') }}">Settings</a>
+            {% if not current_user.is_verified %}
+               <a href="{{ url_for('verify', user_id=current_user.id) }}">verify</a>
+            {% endif %}
+
+        </div>
+    </div>
+    {% elif session.get('admin_id') %}
+    <div class="profile-header">
+        <img src="{{ url_for('static', filename=admin.profile_image if admin.profile_image else 'img/profile.jpg') }}" 
+             alt="Profile Picture" class="profile-picture">
+             <h1>Welcome Admin</h1>
+        <h1>{{ admin.username }}</h1>
+        <br>
+        <h2>{{ admin.email }}</h2>
+        <div class="profile-actions">
+            <a href="{{ url_for('admin.profile') }}">Edit Profile</a>
+            <a href="{{ url_for('admin.change_password') }}">Change Password</a>
+            <a href="{{ url_for('admin.dashboard') }}">Settings</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Profile Details -->
+    <div class="profile-details">
+        
+        <!-- About Section -->
+        <section class="about">
+            <h3>About Me</h3>
+            <p>{{ current_user.bio or "Add some information about yourself" }}</p>
+        </section>
+        
+        <!-- Recent Activity -->
+        <section class="recent-activity">
+            <h3>Recent Activity</h3>
+            <ul>
+                {% for activity in recent_activities %}
+                    <li>{{ activity.description }} - {{ activity.date }}</li>
+                {% else %}
+                    <li>No recent activity</li>
+                {% endfor %}
+            </ul>
+        </section>
+        
+        <!-- Statistics and Analytics (Optional) -->
+        <section class="analytics">
+            <h3>Usage Summary</h3>
+
+        </section>
+
+        <!-- App-Specific Settings -->
+        <section class="app-settings">
+            <h3>Settings</h3>
+            <p>Manage your notification and privacy preferences.</p>
+            <a href="{{ url_for('dashboard') }}">Go to Settings</a>
+        </section>
+
+        <!-- Help and Support -->
+        <section class="support">
+            <h3>Help & Support</h3>
+            <a href="{{ url_for('dashboard') }}">Help Center</a>
+            <a href="{{ url_for('dashboard') }}">Contact Support</a>
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}

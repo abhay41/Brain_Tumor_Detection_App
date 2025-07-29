@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Brain Tumor Prediction App{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="brain-image">
+        <img src="{{ url_for('static', filename='img/hero-image.jpg') }}" alt="Medical image">
+    </div>
+    <h1>Brain Tumor Prediction App</h1>
+    <p>Scan MRI results to find the probability of a tumor using our AI-powered application</p>
+    <div class="main-buttons">
+        <a href="{{ url_for('login') }}"><button class="btn btn-primary">LOGIN</button></a>
+        
+        <a href="{{ url_for('register') }}"><button class="btn btn-secondary">REGISTER</button></a>
+    </div>
+    
+</section>
+{% endblock %}

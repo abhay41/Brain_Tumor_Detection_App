@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Login Management - Brain Tumor Prediction App{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="admin-panel">
+        <header class="panel-header">
+            <h2>Manage User Logins</h2>
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" id="userSearch" placeholder="Search by username...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <select id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="success">Success</option>
+                    <option value="failed">Failed</option>
+                </select>
+            </div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="log-container">
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Timestamp</th>
+                        <th>Status</th>
+                        <th>Account Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in login_attempts %}
+                        <tr class="log-entry {% if not log.success %}failed-login{% endif %}">
+                            <td class="username-cell">{{ log.user.username if log.user else 'Unknown' }}</td>
+                            <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td>
+                                <span class="status-badge {{ 'success' if log.success else 'failure' }}">
+                                    {{ '✓' if log.success else '✗' }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="account-status {{ 'locked' if log.user.is_locked else 'active' }}">
+                                    {{ 'Locked' if log.user.is_locked else 'Active' }}
+                                </span>
+                            </td>
+                            <td class="actions-cell">
+                                {% if not log.user.is_locked %}
+                                    <a href="{{ url_for('admin.lock_user', user_id=log.user.id) }}"><button class="btn btn-primary">Lock</button> </a>
+                                {% else %}
+                                    <a href="{{ url_for('admin.unlock_user', user_id=log.user.id) }}"><button class="btn btn-primary">UnLock</button></a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin_style.css') }}">
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Search Filter
+    const userSearch = document.getElementById('userSearch');
+    if (userSearch) {
+        userSearch.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.log-entry');
+            
+            rows.forEach(row => {
+                const username = row.querySelector('.username-cell').textContent.toLowerCase();
+                row.style.display = username.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    }
+
+    // Status Filter
+    const statusFilter = document.getElementById('statusFilter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', function(e) {
+            const filter = e.target.value;
+            const rows = document.querySelectorAll('.log-entry');
+            
+            rows.forEach(row => {
+                const isSuccess = row.querySelector('.status-badge').classList.contains('success');
+                row.style.display = 
+                    (filter === 'all') ||
+                    (filter === 'success' && isSuccess) ||
+                    (filter === 'failed' && !isSuccess) ? '' : 'none';
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

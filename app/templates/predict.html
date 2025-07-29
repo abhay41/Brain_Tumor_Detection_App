@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Brain Tumor Predictor{% endblock %}
+
+{% block content %}
+<div class="predictor-container">
+
+    <!-- Sidebar for Input Form -->
+    <div class="sidebar">
+        <h1 class="app-title">Brain Tumor Predictor</h1>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <!-- Prediction Form -->
+        <form id="predict-form" class="stylish-form" action="/predict" method="POST" enctype="multipart/form-data">
+            
+            <!-- Patient Name Input -->
+            <div class="input-group">
+                <input type="text" id="name" name="name" required>
+                <label for="name">Patient Name</label>
+            </div>
+            
+            <!-- Age Input -->
+            <div class="input-group">
+                <input type="number" id="age" name="age" required>
+                <label for="age">Age</label>
+            </div>
+            
+            <!-- Gender Selection -->
+            <div class="input-group">
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected></option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+                <label for="gender">Gender</label>
+            </div>
+            
+            <!-- Diagnosis Date Input -->
+            <div class="input-group">
+                <input type="date" id="diagnosis_date" name="diagnosis_date" required>
+                <label for="diagnosis_date">Diagnosis Date</label>
+            </div>
+            
+            <!-- File Upload Section -->
+            <div class="file-upload" id="drop-area">
+                <input type="file" id="file" name="file" accept="image/*" required>
+                <label for="file">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Choose or drop image</span>
+                </label>
+            </div>
+            
+            <!-- Submit Button -->
+            <!-- <button type="submit" class="btn btn-primary">Predict</button> -->
+        </form>
+    </div>
+
+    <!-- Main Content: Image Preview Section -->
+    <div class="main-content">
+        <div class="image-preview">
+            <img id="preview" src="" alt="Image preview">
+            <div class="image-info">
+                <p id="file-name">No file selected</p>
+                <p id="file-size">Size: --</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Display Section -->
+    <div class="result-area">
+        <h2>Prediction Result</h2>
+        <div id="result-display">
+            <!-- Prediction results will be displayed here -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/predict.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+
+{% block title %}About NeuroVision - Advanced Tumor Detection{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <header class="about-header">
+        <h1>About NeuroVision</h1>
+        <p class="tagline">Advancing brain health through AI-powered tumor detection</p>
+    </header>
+
+    <section class="mission-section">
+        <div class="image-wrapper">
+            <img src="{{ url_for('static', filename='img/brain.jpg') }}" alt="AI-powered brain scan" class="mission-image">
+        </div>
+        <div class="content-wrapper">
+            <h2>Our Mission</h2>
+            <p>At NeuroVision, we're dedicated to revolutionizing brain tumor detection through cutting-edge artificial intelligence. Our mission is to provide healthcare professionals with powerful, accurate, and easy-to-use tools that enhance patient care and improve outcomes.</p>
+        </div>
+
+    </section>
+
+    <section class="features-section">
+        <h2>What NeuroVision Does</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-brain"></i>
+                <h3>Advanced Detection</h3>
+                <p>Utilizing state-of-the-art deep learning algorithms to identify and classify brain tumors with high accuracy.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Precise Analysis</h3>
+                <p>Providing detailed reports and visualizations to assist in diagnosis and treatment planning.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clock"></i>
+                <h3>Rapid Results</h3>
+                <p>Delivering fast and reliable results to support timely decision-making in critical situations.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-md"></i>
+                <h3>User-Friendly Interface</h3>
+                <p>Designed with healthcare professionals in mind, ensuring ease of use and seamless integration into existing workflows.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <h2>Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='img/brain.jpg') }}" alt="">
+                <h3>ABHAY THAKUR</h3>
+                <p></p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='img/brain.jpg') }}" alt="">
+                <h3>ABRAHAM ALEMAYEHU</h3>
+                <p></p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='img/brain.jpg') }}" alt="">
+                <h3>ABUBAKAR SAINI</h3>
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <h2>Get in Touch</h2>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p><i class="fas fa-map-marker-alt"></i> C.V. Raman Global University</p>
+                <p><i class="fas fa-phone"></i> +91-1234567891</p>
+                <p><i class="fas fa-envelope"></i> information@neurovision.ai</p>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f4f7f9;
+    }
+
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    h1 {
+        font-size: 3em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+    }
+
+    .tagline {
+        font-size: 1.2em;
+        color: #7f8c8d;
+    }
+
+    h2 {
+        font-size: 2em;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .mission-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 60px;
+    }
+
+    .content-wrapper {
+        flex: 1;
+    }
+
+    .image-wrapper {
+        height: 350px;
+        width: 350px;
+        padding-right: 40px;
+        
+
+    }
+
+    .mission-image {
+        width: 100%;
+        border-radius: 40px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .features-section {
+        margin-bottom: 60px;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+
+    .feature-card {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-card i {
+        font-size: 2.5em;
+        color: #3498db;
+        margin-bottom: 20px;
+    }
+
+    .team-section {
+        margin-bottom: 60px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+    }
+
+    .team-member {
+        text-align: center;
+    }
+
+    .team-member img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+    }
+
+    .contact-section {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .contact-info i {
+        color: #3498db;
+        margin-right: 10px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .contact-form textarea {
+        height: 150px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #2980b9;
+    }
+
+    @media (max-width: 768px) {
+        .mission-section {
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            padding-right: 0;
+            margin-bottom: 30px;
+        }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Here you would typically send the form data to your server
+        // For this example, we'll just show an alert
+        alert('Thank you for your message! We will get back to you soon.');
+        contactForm.reset();
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add animation to feature cards on scroll
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    function checkScroll() {
+        featureCards.forEach(card => {
+            const cardTop = card.getBoundingClientRect().top;
+            if (cardTop < window.innerHeight - 100) {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }
+        });
+    }
+
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); // Check on load
+});
+</script>
+{% endblock %}

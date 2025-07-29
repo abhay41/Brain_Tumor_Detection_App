@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="profile-update-container">
+
+    <!-- Page Title -->
+    <h1 class="page-title">Update Profile Picture</h1>
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <!-- Form for Profile Picture Upload -->
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+        {{ form.hidden_tag() }} <!-- Hidden CSRF token for form security -->
+
+        <!-- Preview Section for Image Display & Controls (Hidden by Default) -->
+        <div class="preview-section" style="display: none;">
+            <div class="preview-container">
+                
+                <!-- Image Preview Wrapper -->
+                <div class="preview-wrapper">
+                    <img id="imagePreview" src="" alt="Profile Preview">
+                </div>
+
+                <!-- Controls for Zoom & Rotation -->
+                <div class="preview-controls">
+                    <button type="button" class="control-btn" id="zoomIn">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button type="button" class="control-btn" id="zoomOut">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <button type="button" class="control-btn" id="rotateLeft">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                    <button type="button" class="control-btn" id="rotateRight">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload Area -->
+        <div class="form-group">
+            <label for="{{ form.profile_image.id }}" class="upload-label">
+                <div class="upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Click to choose a file or drag it here</span>
+                    <span class="file-specs">Supported formats: JPG, PNG, GIF (max 5MB)</span>
+                </div>
+            </label>
+            {{ form.profile_image(class="file-input", accept="image/*") }}
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="form-group">
+            {{ form.submit(class="submit-btn") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

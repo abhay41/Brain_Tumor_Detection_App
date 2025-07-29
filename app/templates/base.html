@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page Title -->
+    <title>{% block title %}Brain Tumor Prediction App{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/hero-image.jpg') }}" type="image/png">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% block extra_css %}{% endblock %} <!-- Placeholder for additional CSS -->
+
+</head>
+
+<body>
+    <div class="app-window">
+        
+        <!-- Header Section -->
+        <header class="app-header">
+            <!-- Logo Section -->
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/hero-image.jpg') }}" alt="Brain Tumor Prediction App Logo">
+                <h1>Brain Tumor Prediction</h1>
+            </div>
+
+            <!-- Navigation Bar -->
+            <nav>
+                <ul>
+                    <!-- Authenticated User Links -->
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('dashboard') }}" {% if request.endpoint == 'dashboard' %}class="active"{% endif %}><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="{{ url_for('predict') }}" {% if request.endpoint == 'predict' %}class="active"{% endif %}><i class="fas fa-brain"></i> Predict</a></li>
+                        <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}><i class="fas fa-user"></i> Profile</a></li>
+                    {% elif session.get('admin_id') %}
+                    <li><a href="{{ url_for('admin.dashboard') }}" {% if request.endpoint == 'admin/dashboard' %}class="active"{% endif %}><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="{{ url_for('admin.list_users') }}" {% if request.endpoint == 'predict' %}class="active"{% endif %}><i class="fas fa-user"></i> User_lists</a></li>
+                    <li><a href="{{ url_for('admin.profile') }}" {% if request.endpoint == 'admin/profile' %}class="active"{% endif %}><i class="fas fa-user"></i> Profile</a></li>
+
+                    <!-- Guest User Links -->
+                    {% else %}
+                        <li><a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}class="active"{% endif %}><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="{{ url_for('register') }}" {% if request.endpoint == 'register' %}class="active"{% endif %}><i class="fas fa-user-plus"></i> Register</a></li>
+                        <li><a href="{{ url_for('login') }}" {% if request.endpoint == 'login' %}class="active"{% endif %}><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+
+            <!-- User Info Section -->
+            <div class="user-info">
+                {% if current_user.is_authenticated %}
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="profileDropdown" onclick="toggleDropdown(event)">
+                            <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'img/profile.jpg') }}" 
+                                 alt="User Avatar" class="avatar">
+                        </a>
+                        <ul class="dropdown-menu" id="dropdownMenu">
+                            <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a href="{{ url_for('logout') }}" {% if request.endpoint == 'logout' %}class="active"{% endif %}><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+                        </ul>
+                    </div>
+                
+                {% elif session.get('admin_id') %}
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="profileDropdown" onclick="toggleDropdown(event)">
+                        <img src="{{ url_for('static', filename=current_user.profile_image if current_user.profile_image else 'img/profile.jpg') }}" 
+                             alt="User Avatar" class="avatar">
+                    </a>
+                    <ul class="dropdown-menu" id="dropdownMenu">
+                        <li><a href="{{ url_for('admin.profile') }}" {% if request.endpoint == 'admin/profile' %}class="active"{% endif %}><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a href="{{ url_for('admin.logout') }}" {% if request.endpoint == 'admin/logout' %}class="active"{% endif %}><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+                    </ul>
+                </div>
+
+                {% endif %}
+                <button class="nav-toggle"><i class="fas fa-bars"></i></button>
+
+            </div>
+            
+        </header>
+
+
+        <!-- Main Content Section -->
+        <main class="app-content">
+            {% block content %}
+            <!-- Content will be inserted here by child templates -->
+            {% endblock %}
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="app-footer">
+            <p>&copy; 2024 Brain Tumor Prediction App. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const appHeaderNav = document.querySelector('.app-header nav');
+
+        navToggle.addEventListener('click', () => {
+            appHeaderNav.classList.toggle('show');
+        });
+    </script>
+    {% block extra_js %}{% endblock %} <!-- Placeholder for additional JavaScript -->
+
+</body>
+</html>

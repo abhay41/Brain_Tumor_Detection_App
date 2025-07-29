@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    
+    <!-- Dashboard Header -->
+    <header>
+        <h1>Welcome, <span class="username">{{ current_user.username }}</span></h1>
+        <p class="subtitle">NeuroVision Dashboard</p>
+    </header>
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Dashboard Content Grid -->
+    <div class="dashboard-grid">
+        
+        <!-- Left Column: Quick Actions, Profile Info, Updates -->
+        <div class="left-column">
+            
+            <!-- Quick Actions Card -->
+            <div class="card quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="button-group">
+                    <a href="{{ url_for('predict') }}" class="btn btn-primary">New Analysis</a>
+                </div>
+            </div>
+
+            <!-- Profile Information Card -->
+            <div class="card account-info">
+                <h2>Profile</h2>
+                <p><strong>Email:</strong> {{ current_user.email }}</p>
+            </div>
+
+            <!-- Important Updates Card -->
+            <div class="card important-info">
+                <h2>Updates</h2>
+                <ul class="news-list">
+                    <li>New AI model update available</li>
+                    <li>Maintenance: {{ upcoming_maintenance_date }}</li>
+                    <li>Check out our latest research findings</li>
+                </ul>
+            </div>
+
+        </div>
+        
+        <!-- Center Column: Tumor Classification Chart -->
+        <div class="center-column">
+            <div class="card prediction-stats">
+                <h2>Tumor Classification</h2>
+                <div class="chart-container">
+                    <canvas id="predictionChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column: Accuracy Trend Chart, Recent Activity -->
+        <div class="right-column">
+            
+            <!-- Accuracy Trend Chart Card -->
+            <div class="card accuracy-trend">
+                <h2>Accuracy Trend</h2>
+                <div class="chart-container">
+                    <canvas id="accuracyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity Card -->
+            <div class="card recent-activity">
+                <h2>Recent Activity</h2>
+                <ul>
+                    <li>Analysis #1092 - Glioma detected</li>
+                    <li>Analysis #1091 - No tumor detected</li>
+                    <li>Analysis #1090 - Meningioma detected</li>
+                    <li>Profile updated</li>
+                    <li>Completed monthly accuracy review</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- External Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+
+{% endblock %}

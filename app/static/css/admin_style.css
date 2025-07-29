@@ -1,0 +1,279 @@
+/* Admin Dashboard Styles */
+
+.admin-dashboard-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* System Overview */
+.overview-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.stat h3 {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.stat p {
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.chart-container {
+    margin-top: 20px;
+    height: 250px;
+}
+
+/* User Management */
+.user-management {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.user-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* Prediction Analytics */
+.prediction-analytics .chart-container {
+    height: 350px;
+}
+
+/* Model Performance */
+.model-performance {
+    display: flex;
+    flex-direction: column;
+}
+
+.model-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.model-performance .chart-container {
+    margin-top: 20px;
+    height: 300px;
+}
+
+/* System Settings */
+.system-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.settings-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.settings-info h3 {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.settings-info p {
+    color: #333;
+    font-size: 1.2rem;
+}
+
+
+
+.admin-panel {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 20px;
+    padding: 20px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 8px 32px 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.search-box i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+#statusFilter {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.log-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.log-table th {
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #444;
+}
+
+.log-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.log-entry:hover {
+    background-color: #f8f9fa;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.status-badge.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-badge.failure {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.account-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.account-status.active {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.account-status.locked {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.actions-cell {
+    white-space: nowrap;
+}
+
+.alert {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .panel-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .header-actions {
+        flex-direction: column;
+    }
+    
+    .log-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-container,
+    .prediction-analytics .chart-container,
+    .model-performance .chart-container {
+        height: 250px;
+    }
+}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Patient List - Brain Tumor Prediction App{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="patient-list-container">
+        <h2 class="mb-4">Patient List</h2>
+        <table class="table table-striped table-bordered">
+            <thead class="table-primary">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Tumor Type</th>
+                    <th>Diagnosis Date</th>
+                    <!-- <th>Image</th> -->
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.age }}</td>
+                    <td>{{ patient.gender }}</td>
+                    <td>{{ patient.tumor_type }}</td>
+                    <td>{{ patient.diagnosis_date.strftime('%Y-%m-%d') }}</td>
+                    <!-- <td>
+                        {% if patient.image_path %}
+                        <img src="{{ url_for('static', filename='uploads/' ) }}" alt="Patient Image" width="80" height="80">
+                        {% else %}
+                        No Image
+                        {% endif %}
+                    </td> -->
+                    <td>{{ patient.user.username }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
