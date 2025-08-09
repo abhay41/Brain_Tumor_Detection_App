@@ -1,4 +1,4 @@
-# Brain Tumor Detection System
+# Brain Tumor Prediction App
 
 A web-based AI application that leverages deep learning to analyze brain MRI scans and detect tumors. Designed for doctors and patients, this system provides accurate classifications, confidence scores, and treatment suggestions to aid diagnosis and medical decision-making.
 
@@ -25,7 +25,31 @@ A web-based AI application that leverages deep learning to analyze brain MRI sca
 - **Containerization:** Docker Compose
 - **Email Notifications:** Gmail SMTP with App Passwords
 
+## Future Work
+- Automate the ML pipeline (training → deployment) with CI/CD workflows.
+- Add Kubernetes orchestration for scalability and high availability.
+- Improve security with secret management and role-based access.
+- Implement monitoring and alerting with Prometheus and Grafana.
+
+## Project Structure
+
+- **app/**— Flask app source code (routes, models, templates)
+- **model/**— ML model files
+- **mysql-init/**— Initial SQL scripts for database setup and seeding
+- **.env**— Environment variables for configuration
+- **Dockerfile**— Multi-stage Dockerfile for building the Flask app
+- **docker-compose.yml**— Compose file to run MySQL and Flask services together
+
 ---
+
+## Screenshots
+
+![Login Page](docs/screenshots/login.png)
+*Login page*
+
+![Dashboard](docs/screenshots/dashboard.png)
+*User dashboard displaying patient data*
+
 
  **Clone the repository:**
    ```bash
