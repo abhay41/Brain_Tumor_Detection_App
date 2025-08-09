@@ -1,8 +1,8 @@
 import os
 
 class Config:
-    BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    SECRET_KEY = 'This is Abhay'
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+    SECRET_KEY = os.getenv('SECRET_KEY', 'This is Abhay')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join('app', 'static', 'uploads')
     UPLOAD_FOLDERS = os.path.join('app', 'static', 'profiles')

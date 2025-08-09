@@ -1,38 +1,37 @@
-# ---- Base Stage ----
-FROM python:3.10-slim AS base
+# ---- Build stage ----
+FROM python:3.10-slim AS build
 
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     default-libmysqlclient-dev \
     libmariadb-dev-compat \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
 COPY requirements.txt .
-RUN pip install --upgrade pip && pip install --no-cache-dir --default-timeout=100 --retries=5 -r requirements.txt
 
-# ---- Final Stage ----
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+# ---- Final stage ----
 FROM python:3.10-slim AS final
 
 WORKDIR /app
 
-# Copy only installed packages from base
-COPY --from=base /usr/local /usr/local
+# Copy only installed python packages from build stage
+COPY --from=build /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+COPY --from=build /usr/local/bin /usr/local/bin
 
-# Copy your source code
-COPY . .
+# Copy your application code (exclude large files if possible)
+COPY --from=build /app /app
 
-# Set environment variable (optional, can also use .env)
 ENV FLASK_APP=run.py
-ENV FLASK_ENV=development
+ENV FLASK_ENV=production
 
-# Expose Flask port
 EXPOSE 5000
 
-# Run the Flask app
-CMD ["python", "run.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]

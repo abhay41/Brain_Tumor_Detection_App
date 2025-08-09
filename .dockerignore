@@ -1,21 +1,31 @@
-__pycache__/ 
+# Python cache and bytecode
+__pycache__/
 *.py[cod]
 *.pyo
+*.pyc
+*.pyd
+
+# Logs and environment
 *.log
-
-# Env & packages
-venv/
-.env
 *.env
+.env
 
-# Local static/uploads
-app/static/uploads/
+# Virtual environment
+venv/
 
-# OS & editor files
+# Git and editor configs
+.git/
+.idea/
+.vscode/
+
+# OS & editor temp files
 .DS_Store
 *.swp
 
-# Large files
+# Static uploads (local files, large user data)
+app/static/uploads/
+
+# Large files/extensions (models, datasets, videos)
 *.zip
 *.tar.gz
 *.h5
@@ -24,3 +34,9 @@ app/static/uploads/
 *.mp4
 *.avi
 *.mkv
+
+# Add Python egg info (if exists)
+*.egg-info/
+
+# Ignore tests if you don't want to include them
+tests/
