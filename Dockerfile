@@ -6,7 +6,6 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     default-libmysqlclient-dev \
-    libmariadb-dev-compat \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,12 +21,19 @@ FROM python:3.10-slim AS final
 
 WORKDIR /app
 
-# Copy only installed python packages from build stage
+# Copy installed python packages
 COPY --from=build /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 COPY --from=build /usr/local/bin /usr/local/bin
 
-# Copy your application code (exclude large files if possible)
+# Copy application code with correct structure
 COPY --from=build /app /app
+
+# FIX: Explicitly copy static files
+COPY --from=build /app/app/static /app/app/static
+
+# Fix permissions for static files
+RUN chmod -R a+r /app/app/static && \
+    find /app/app/static -type d -exec chmod a+rx {} \;
 
 ENV FLASK_APP=run.py
 ENV FLASK_ENV=production
