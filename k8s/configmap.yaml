@@ -1,0 +1,10 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: brain-tumor-app
+data:
+  MYSQL_HOST: "mysql-service"
+  MYSQL_DB: "brain_tumor_db"
+  FLASK_ENV: "production"
