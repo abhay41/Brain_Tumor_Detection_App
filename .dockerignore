@@ -22,9 +22,6 @@ venv/
 .DS_Store
 *.swp
 
-# Static uploads (local files, large user data)
-app/static/uploads/
-
 # Large files/extensions (models, datasets, videos)
 *.zip
 *.tar.gz
