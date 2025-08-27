@@ -5,13 +5,13 @@ metadata:
   name: mysql-pv
   namespace: brain-tumor-app
 spec:
-  storageClassName: manual
+  storageClassName: standard  # Changed from manual to standard
   capacity:
     storage: 2Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/data/mysql"
+    path: "/data/mysql"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -19,10 +19,11 @@ metadata:
   name: uploads-pv
   namespace: brain-tumor-app
 spec:
-  storageClassName: manual
+  storageClassName: standard   # Changed from manual to standard
   capacity:
     storage: 1Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   hostPath:
-    path: "/mnt/data/uploads"
+    path: "/data/uploads"
+    type: DirectoryOrCreate

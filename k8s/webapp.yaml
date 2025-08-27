@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: abhay41/brain_tumor_app:latest
+        image: abhay41/brain_tumor_web:latest
         env:
         - name: MYSQL_USER
           value: "root"
@@ -51,16 +51,16 @@ spec:
           mountPath: /app/app/static/uploads
         readinessProbe:
           httpGet:
-            path: /health  # Add a health check endpoint
+            path: /  # Add a health check endpoint
             port: 5000
-          initialDelaySeconds: 15
+          initialDelaySeconds: 30
           periodSeconds: 10
           timeoutSeconds: 5
         livenessProbe:
           httpGet:
-            path: /health
+            path: /
             port: 5000
-          initialDelaySeconds: 30
+          initialDelaySeconds: 45
           periodSeconds: 15
           timeoutSeconds: 5
         resources:
@@ -82,7 +82,7 @@ metadata:
   name: web-service
   namespace: brain-tumor-app
 spec:
-  type: LoadBalancer  # Changed to LoadBalancer for EC2 access
+  type: LoadBalancer   # Changed to LoadBalancer for EC2 access
   selector:
     app: webapp
   ports:

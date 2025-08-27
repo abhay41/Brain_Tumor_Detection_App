@@ -16,7 +16,7 @@ services:
 
   web:
     build: .
-    image: abhay41/brain_tumor_app:latest
+    image: abhay41/brain_tumor_web:latest
     container_name: brain_tumor_web
     restart: always
     ports:

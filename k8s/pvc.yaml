@@ -5,7 +5,7 @@ metadata:
   name: mysql-pvc
   namespace: brain-tumor-app
 spec:
-  storageClassName: manual
+  storageClassName: standard   # Changed from manual to standard
   accessModes:
     - ReadWriteOnce
   resources:
@@ -18,9 +18,9 @@ metadata:
   name: uploads-pvc
   namespace: brain-tumor-app
 spec:
-  storageClassName: manual
+  storageClassName: standard   # Changed from manual to standard
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
